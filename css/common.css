@@ -7,6 +7,8 @@ body {
   overflow-x: hidden;
 
   -webkit-text-size-adjust: 100%;
+
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 div,
@@ -14,6 +16,7 @@ input {
   margin: 0;
   padding: 0;
   border: 0;
+  box-sizing: border-box;
 
   display: block;
   position: absolute;
@@ -48,6 +51,11 @@ img {
 
 .TRANSPARENT {
   opacity: 0;
+}
+
+.reversed {
+  transform: rotate(180deg);
+  transform-origin: center;
 }
 
 /**********************************/

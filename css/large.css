@@ -9,11 +9,6 @@
     top: 50%;
   }
 
-  .reverse {
-    transform: rotate(180deg);
-    transform-origin: center;
-  }
-
   #board_con {
     width: 500px;
     height: 500px;
@@ -22,60 +17,115 @@
   }
 
   #board_base_con,
-  #board_move_con {
+  #board_movs_con {
     width: 100%;
     height: 100%;
   }
 
-  .board_row {
+  .board_square {
     position: relative;
     float: left;
-    box-sizing: border-box;
-    width: 500px;
+    width: 100px;
     height: 100px;
   }
 
-  .board_base {
-    position: relative;
-    float: left;
-    box-sizing: border-box;
-    width: 100px;
-    height: 100px;
+  .board_border {
     border: solid 1px white;
   }
 
-  .board_mov {
-  }
-
-  .square_blueMaster {
+  .blueMaster {
     background-image: url(../assets/blueMaster.png);
   }
 
-  .square_blueKid {
+  .blueKid {
     background-image: url(../assets/blueKid.png);
   }
 
-  .square_redMaster {
+  .redMaster {
     background-image: url(../assets/redMaster.png);
   }
 
-  .square_redKid {
+  .redKid {
     background-image: url(../assets/redKid.png);
   }
 
-  .square_blueMove {
+  .blueMove {
     background-color: #0000ff;
     opacity: 0.3;
   }
 
-  .square_redMove {
+  .redMove {
     background-color: #ff0000;
     opacity: 0.3;
   }
 
-  .card {
+  /***********/
+
+  .card_con {
+    width: 280px;
+    height: 140px;
+    background-color: #555555;
+  }
+
+  .card_name {
+    width: 140px;
+    height: 30px;
+    left: 20px;
+    top: 20px;
+
+    font-size: 25px;
+    color: #ffffff;
+    line-height: 100px;
+    letter-spacing: 0px;
+    font-weight: bold;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .card_moves_con {
+    width: 100px;
+    height: 100px;
+    right: 20px;
+    bottom: 20px;
   }
 
   .card_square {
+    position: relative;
+    float: left;
+    width: 20px;
+    height: 20px;
+  }
+
+  .card_square_center {
+    background-color: #333333;
+  }
+
+  .card_square_move {
+    background-color: #bbbbbb;
+  }
+
+  #self_card1 {
+    left: -320px;
+    top: 290px;
+  }
+
+  #self_card2 {
+    left: 40px;
+    top: 290px;
+  }
+
+  #opponent_card1 {
+    left: 40px;
+    top: -430px;
+  }
+
+  #opponent_card2 {
+    left: -320px;
+    top: -430px;
+  }
+
+  #middle_card {
+    left: 290px;
+    top: -70px;
   }
 }

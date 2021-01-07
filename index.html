@@ -24,19 +24,46 @@
  
     <div id="wrapper">
         <div id="game_con">
-            <div id="board_con">
+            <div id="board_con" :class="{reversed: reverse}">
                 <div id="board_base_con">
-                    <div v-for="square in renderBoard" class="board_base"></div>
+                    <div v-for="(square) in concatBoardArray()" class="board_square board_border" :class="classForBase(square)"></div>
                 </div>
-                <div id="board_move_con">
-                    <div v-for="square in renderBoard" class="board_move"></div>
+                <div id="board_moves_con">
+                    <div v-for="(square,index) in concatMovesArray()" class="board_square" :class="classForMoves(square)" @click="boardClickHandler(index)"></div>
                 </div>
             </div>
-            <div id="self_card1" class="card"></div>
-            <div id="self_card2" class="card"></div>
-            <div id="opponent_card1" class="card reverse"></div>
-            <div id="opponent_card2" class="card reverse"></div>
-            <div id="middle_card" class="card"></div>
+
+
+            <div id="self_card1" class="card_con">
+                <div class="card_name"> {{self_card1.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(self_card1.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>
+            <div id="self_card2" class="card_con">
+                <div class="card_name"> {{self_card2.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(self_card2.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>
+            <div id="middle_card" class="card_con">
+                <div class="card_name"> {{middle_card.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(middle_card.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>
+            <div id="opponent_card1" class="card_con reversed">
+                <div class="card_name"> {{opponent_card1.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(opponent_card1.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>
+            <div id="opponent_card2" class="card_con reversed">
+                <div class="card_name"> {{opponent_card2.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(opponent_card2.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>            
         </div>
     </div>
 
