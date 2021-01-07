@@ -1,63 +1,53 @@
 @charset "utf-8";
 
-body 
-{
-	margin:0px;
-	padding:0px;
-	background: #ffffff;
-	overflow-x: hidden;
+body {
+  margin: 0px;
+  padding: 0px;
+  background: #000000;
+  overflow-x: hidden;
 
-	-webkit-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
-div, input
-{
-	margin: 0;
-	padding: 0;
-	border: 0;
+div,
+input {
+  margin: 0;
+  padding: 0;
+  border: 0;
 
-	display: block;
-	position: absolute;
-	overflow: visible;
+  display: block;
+  position: absolute;
+  overflow: visible;
 }
 
-img
-{
-	margin:0;
-	border:0;
+img {
+  margin: 0;
+  border: 0;
 }
 
-.HIDDEN
-{
-	display: none;
+.HIDDEN {
+  display: none;
 }
 
-.NO_MOUSE
-{
-	pointer-events:none; 
+.NO_MOUSE {
+  pointer-events: none;
 }
 
-.BTN
-{
-	cursor: pointer;
+.BTN {
+  cursor: pointer;
 }
 
-.NO_SEL
-{
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+.NO_SEL {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.TRANSPARENT
-{
-	opacity: 0;
+.TRANSPARENT {
+  opacity: 0;
 }
 
 /**********************************/
-
-
-
