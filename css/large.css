@@ -1,9 +1,131 @@
-@media screen and (min-width: 641px) 
-{
-	#wrapper
-	{
-		width:100%;
-		height: 100%;
-	}
-	
+@media screen and (min-width: 641px) {
+  #wrapper {
+    width: 100%;
+    height: 100%;
+  }
+
+  #game_con {
+    left: 50%;
+    top: 50%;
+  }
+
+  #board_con {
+    width: 500px;
+    height: 500px;
+    left: -250px;
+    top: -250px;
+  }
+
+  #board_base_con,
+  #board_movs_con {
+    width: 100%;
+    height: 100%;
+  }
+
+  .board_square {
+    position: relative;
+    float: left;
+    width: 100px;
+    height: 100px;
+  }
+
+  .board_border {
+    border: solid 1px white;
+  }
+
+  .blueMaster {
+    background-image: url(../assets/blueMaster.png);
+  }
+
+  .blueKid {
+    background-image: url(../assets/blueKid.png);
+  }
+
+  .redMaster {
+    background-image: url(../assets/redMaster.png);
+  }
+
+  .redKid {
+    background-image: url(../assets/redKid.png);
+  }
+
+  .blueMove {
+    background-color: #0000ff;
+    opacity: 0.3;
+  }
+
+  .redMove {
+    background-color: #ff0000;
+    opacity: 0.3;
+  }
+
+  /***********/
+
+  .card_con {
+    width: 280px;
+    height: 140px;
+    background-color: #555555;
+  }
+
+  .card_name {
+    width: 140px;
+    height: 30px;
+    left: 20px;
+    top: 20px;
+
+    font-size: 25px;
+    color: #ffffff;
+    line-height: 100px;
+    letter-spacing: 0px;
+    font-weight: bold;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .card_moves_con {
+    width: 100px;
+    height: 100px;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .card_square {
+    position: relative;
+    float: left;
+    width: 20px;
+    height: 20px;
+  }
+
+  .card_square_center {
+    background-color: #333333;
+  }
+
+  .card_square_move {
+    background-color: #bbbbbb;
+  }
+
+  #self_card1 {
+    left: -320px;
+    top: 290px;
+  }
+
+  #self_card2 {
+    left: 40px;
+    top: 290px;
+  }
+
+  #opponent_card1 {
+    left: 40px;
+    top: -430px;
+  }
+
+  #opponent_card2 {
+    left: -320px;
+    top: -430px;
+  }
+
+  #middle_card {
+    left: 290px;
+    top: -70px;
+  }
 }

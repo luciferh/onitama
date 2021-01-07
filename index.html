@@ -3,9 +3,9 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="initial-scale=1, user-scalable=no, width=device-width" id="viewport-meta">
+    
     <title>Onitama</title>
     <link rel="icon" type="image/png" href="" sizes="32x32">
-
     <link rel="image_src" type="image/jpeg" href=""/>
 
     <link href="css/common.css" rel="stylesheet" type="text/css" />
@@ -13,27 +13,59 @@
     <link href="css/small.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript" src="js/device.js"></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js'></script>
+    <script type="text/javascript" src='https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js'></script>
+    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js'></script>
 
     <script type="text/javascript" src='data.js'></script>  
-    <script type="text/javascript" src='init.js'></script>
+    <script type="text/javascript" src='init.js'></script>    
 
 </head>
 <body>
-    
-
+ 
     <div id="wrapper">
         <div id="game_con">
-
-            <div id="board_con">
-                <div id="">
+            <div id="board_con" :class="{reversed: reverse}">
+                <div id="board_base_con">
+                    <div v-for="(square) in concatBoardArray()" class="board_square board_border" :class="classForBase(square)"></div>
+                </div>
+                <div id="board_moves_con">
+                    <div v-for="(square,index) in concatMovesArray()" class="board_square" :class="classForMoves(square)" @click="boardClickHandler(index)"></div>
                 </div>
             </div>
 
+
+            <div id="self_card1" class="card_con">
+                <div class="card_name"> {{self_card1.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(self_card1.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>
+            <div id="self_card2" class="card_con">
+                <div class="card_name"> {{self_card2.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(self_card2.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>
+            <div id="middle_card" class="card_con">
+                <div class="card_name"> {{middle_card.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(middle_card.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>
+            <div id="opponent_card1" class="card_con reversed">
+                <div class="card_name"> {{opponent_card1.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(opponent_card1.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>
+            <div id="opponent_card2" class="card_con reversed">
+                <div class="card_name"> {{opponent_card2.name}} </div>
+                <div class="card_moves_con">
+                    <div v-for="(square) in concatCardSquaresArray(opponent_card2.squares)" class="card_square board_border" :class="classForCardSquares(square)"></div>
+                </div>
+            </div>            
         </div>
     </div>
-
-    <div id="preloader_con"></div>
 
 </body>
 </html>

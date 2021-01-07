@@ -1,153 +1,223 @@
+var vue;
 
-var debugMode = false;
+var vue_data = {
+    mySide: 1,  // 1: Blue  2: Red
+    board:[
+        [2,2,22,2,2],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[1,1,11,1,1]
+    ],
+    moves:[
+        [0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]
+    ],
+    cards: [],  // 0&1 : player1    2 : middle    3&4 : player2
 
-var PATH = "assets/";
-var preloader = new createjs.LoadQueue(false, PATH);
-var manifest = [
- 					"blue_b.png", "blue_s.png", "red_b.png", "red_s.png", "box.png"
-            	];
+    waitForClickPiece: true,
+    waitForClickMove: false,
+    pieceChosen: {},
+    moveChosen: {}
+};
 
-var threeManifest = [
- 					"./js/three.min.js",
-					"./js/three/renderers/Projector.js",
-					"./js/three/renderers/CanvasRenderer.js"
-				];
+var vue_methods = {
+    concatBoardArray: function()
+    {
+        var retArray = [];
+        this.board.forEach((row) => {
+            row.forEach((square) => {
+                retArray.push( square );
+            });
+        });
+        return retArray;
+    },
 
-// var nowAtSec = "";
-// var tlah, tlai0, tlai1;
+    concatMovesArray: function()
+    {
+        var retArray = [];
+        if ( this.waitForClickPiece )
+        {         
+            this.board.forEach((row) => {
+                row.forEach((square) => {
+                    retArray.push( (square % 2 == this.mySide % 2) ? this.mySide : 0);
+                });
+            });
+        }
+        else if ( this.waitForClickMove )
+        {
+            this.moves.forEach((row) => {
+                row.forEach((square) => {
+                    retArray.push( square );
+                });
+            });
+        }
+        return retArray;
+    },
 
-////////////////////////////////////////////////
+    concatCardSquaresArray: function( cardSquares )
+    {
+        var retArray = [];
+        cardSquares.forEach((row) => {
+            row.forEach((square) => {
+                retArray.push( square );
+            });
+        });
+        return retArray;
+    },
 
-window.onload = startLoading;
+    classForBase: function(square, index)
+    {
+        return {
+            reversed: this.reverse, 
+            blueMaster:square == 11, 
+            blueKid:square == 1, 
+            redMaster:square == 22, 
+            redKid:square == 2
+        };
+    },
 
-function startLoading()
-{
-	resizeFunction(true);
-	resizeListener();
-	initTimeLineAnimations();
+    classForMoves: function(square)
+    {
+        return {
+            reversed: this.reverse, 
+            blueMove:square==1 && this.waitForClickMove, 
+            redMove:square==2 && this.waitForClickMove,
+            BTN:square != 0
+        };
+    },
 
-	// if( !checkMobile() )
-	// {
-	// }
-	// else
-	// {
-	// }
-	preload_start();
-}
+    classForCardSquares: function(square)
+    {
+        return {
+            card_square_center:square==100, 
+            card_square_move:square==1,
+        };
+    },
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+    getIndexFromBoard: function(index)
+    {
+        return {
+            x:index%5,
+            y:Math.floor(index/5)
+        };
+    },
 
-function preload_start()
-{
-	preloaderShow();
-	preloader.on("progress", preloaderProgress);
-	preloader.on("complete", after_preload_files);		
-	preloader.setMaxConnections(15);
+    renderCard: function(card)
+    {
+        var retArray = [];
+        this.board.forEach((row) => {
+            row.forEach((square) => {
+                retArray.push( square );
+            });
+        });
+        return retArray;
+    },
 
-	var i;
-	// work imgs
-	for ( i = 0 ; i < CARDS_ARRAY.length ; i++ )
-		manifest.push( CARDS_ARRAY[i].img );
+    boardClickHandler: function(index)
+    {
+        // console.log(this.getIndexFromBoard(index));
+        var pos = this.getIndexFromBoard(index);
+        if (waitForClickPiece)   
+        {
+            waitForClickPiece = false;
+            this.pieceChosen = pos;
+            updatePossibleMoves(pos);
+        }
+        else if (waitForClickMove)
+        {
+            waitForClickMove = false;
+            this.moveChosen = pos;
+            updateAfterMove(pos);
+        }
+    },
 
-	// three.js
-	for ( i = 0 ; i < threeManifest.length ; i++ )
-		manifest.push( threeManifest[i] );
+    updatePossibleMoves: function( pos )
+    {
+        
 
-	preloader.loadManifest(manifest);
-}
+        waitForClickMove = true;
+    },
 
-function after_preload_files()
-{
-	preloaderHide();
+    updateAfterMove: function( pos )
+    {
+        
 
-	//////// list ////////////
+        // check winning ?
 
-	for ( var i = 0 ; i < CARD_ARRAY.length ; i++ )
-	{
-		var nowCon = $("#list"+i+"_con");
-		nowCon.show();
+        waitForClickPiece = true;
+    }
+};
 
-		var tempy = 450;
-		for ( var j = 0 ; j < WORK_ARRAY[i].length ; j++ )
-		{
-			var	str;
-			str = "<div id='list"+i+"_item"+j+"' class='list_item'>";
-			str +=		"<div class='rot-10 BTN'>";
-			str += 			"<div class='fontbt list_title'></div>";
-			str += 			"<div class='list_image'></div>";
-			str += 			"<div class='list_award'></div>";
-			str += 			"<div class='list_linel'></div>";
-			str += 			"<div class='list_linec'></div>";
-			str += 			"<div class='list_liner'></div>";
-			str += 		"</div>";
-			str +=		"<div class='fontl list_txt'></div>";
-	 		str += 	"</div>";
-			nowCon.append(str);
-			var nowItem = $("#list"+i+"_item"+j);
-			nowItem.css({"top":tempy+"px"});
+var vue_computed = {
+    reverse: function() 
+    { 
+        return (this.mySide == 1 ? false : true) 
+    },
 
-			nowItem.children(".rot-10").children(".list_title").append(WORK_ARRAY[i][j].title.replace(/\n/g,"<br>"));
-		}
-
-	}
-	// $("#index_sub1_area").mouseenter( function(){
-	// 	if ( !checkMobile() )
-	// 	{
-	// 		runTextDecode( $("#index_title1a"),50 );
-	// 		TweenMax.to( $(this).parent().children(".index_line"), 0.3, {height:16, ease:Elastic.easeOut});	
-	// 	}
-	// });
-	// $("#index_sub1_area").mouseleave( function(){
-	// 	if ( !checkMobile() )
-	// 	{
-	// 		runTextDecode( $("#index_title1a"),50 );
-	// 		TweenMax.to( $(this).parent().children(".index_line"), 0.3, {height:1, ease:Power2.easeOut});	
-	// 	}
-	// });
-	// $("#index_sub1_area").click( function(){toList(1);} );
-
-	init();
-}
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	// TweenMax.to( $("#contact"), 1, {alpha:1, ease:Power2.easeOut});	
-	//TweenMax.delayedCall( 4, function(){ 	TweenMax.to( $("#contact"), 1, {alpha:1, ease:Power2.easeOut});	});
+    self_card1: function() 
+    {
+        return this.cards[0];
+    },
+    self_card2: function()     
+    {
+        return this.cards[1];
+    },
+    middle_card: function() 
+    {
+        return this.cards[2];
+    },
+    opponent_card1: function() 
+    {
+        return this.cards[3];
+    },
+    opponent_card2:function() 
+    {
+        return this.cards[4];
+    }
+};
 
 
 
+
+
+window.onload = init;
 
 function init()
 {
-
-
+    generateCardSquares();
+    randomCards();
+    
+    vue = new Vue({
+        el:'#wrapper',
+        data: vue_data,
+        methods:vue_methods,
+        computed:vue_computed
+    });
 }
 
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-function preloaderProgress( event )
+function generateCardSquares()
 {
-	var percent = Math.floor(event.progress*100);
-	$("#preloader_con").empty();
-	$("#preloader_con").append(percent+"%");
+    CARDS_ARRAY.forEach((card) => {
+        card.squares = [];
+        for ( var i = 0 ; i < 5 ; i++)
+        {
+            card.squares[i] = [];
+            for ( var j = 0 ; j < 5 ; j++)
+            {
+                card.squares[i][j] = 0;
+            }
+        }
+
+        card.squares[2][2] = 100;
+        card.moves.forEach( (move) => {
+            card.squares[move[0]+2][move[1]+2] = 1;
+        }); 
+    });
 }
 
-function preloaderShow()
+function randomCards()
 {
-}
+    var cloneCardsArray = [];
+    CARDS_ARRAY.forEach((card) => {
+        cloneCardsArray.push( card );
+    });
 
-function preloaderHide()
-{
-	$("#preloader_con").hide();
+    for ( var i = 0 ; i<5 ; i++)
+        vue_data.cards.push(cloneCardsArray.splice(Math.floor(Math.random()*cloneCardsArray.length),1)[0]);
 }
